@@ -1,0 +1,136 @@
+﻿@model ReservaSala.Models.ReservaSala
+
+@{
+    ViewBag.Title = "Editar reserva de sala";
+}
+
+<div class="container margin-top-ajust margin-bot-ajust">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.idResSala, new { @id = "idReserva" })
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
+
+        <div class="container box-container-for-modal">
+            <hr class="margin-inv" />
+            <h4 class="text-centro">@ViewBag.Title</h4>
+            <hr />
+            <div class="row mt-0">
+                <div class="col-md-6">
+                    <label class="control-label col-md-6 index-z negrito">Motivo: </label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.titulo, "", new { @class = "form-control border col-md-12 index-z negrito", @id = "titulo" })
+                        @Html.ValidationMessageFor(model => model.titulo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-1">
+                <div class="col-md-6">
+                    <label class="control-label col-md-6 index-z negrito">Sala a ser reservada: </label>
+                    <div class="col-md-6">
+                        <div class="input-group-prepend">
+                            @Html.DropDownListFor(model => model.idSala, null, "Selecione uma sala", htmlAttributes: new { @class = "form-control border col-md-12 index-z negrito", @id = "sala" })
+                            <div id="informacao">
+                                @*Aqui vai ser os detalhes da sala*@
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.idSala, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.reservaDia, htmlAttributes: new { @class = "control-label col-md-6 index-z negrito" })
+                    <div class="col-6">
+                        @Html.TextBoxFor(model => model.reservaDia, new { @class = "form-control border index-z negrito", @id = "dataselecao", @readonly = "readonly" })&nbsp;
+                        @Html.ValidationMessageFor(model => model.reservaDia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.reservaHoraIni, htmlAttributes: new { @class = "control-label col-md-6 index-z negrito" })
+                    <div class="col-6">
+                        @Html.EditorFor(model => model.reservaHoraIni, new { htmlAttributes = new { @class = "form-control border input-100", @type = "text", @id = "horaInicial", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.reservaHoraIni, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.reservaHoraFim, htmlAttributes: new { @class = "control-label col-md-6 index-z negrito" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.reservaHoraFim, new { htmlAttributes = new { @class = "form-control border input-100", @type = "text", @id = "horaFinal", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.reservaHoraFim, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="custId" name="custId">
+            @Html.HiddenFor(model => model.idUsuSala)
+            <div id="modal_Sala" class="modal fade"></div>
+            <div id="modal_usuario" class="modal fade"></div>
+            <hr class="margin-top-hr" />
+            <div class="container box-footer">
+                <div class="form-group row mt-4">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-primary index-z margin-bot magin-left-ajust">
+                            <i class="far fa-save"></i>   Salvar
+                        </button>
+                    </div>
+                    <a class="btn btn-danger index-z margin-bot" title="Voltar" href="@Url.Action("Index","ReservaSalas")">
+                        <i class="fas fa-times"></i>  Cancelar
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.timepicker.min.js"></script>
+    <script src="~/Scripts/jquery.timepicker.js"></script>
+
+    <script>
+        //tratamento dos links para os ajaxs ou afins
+        var DetalhesSalas = '@Url.Action("DetalhesSala", "Salas")';
+        var CreateUsuarioSala = '@Url.Action("Create", "UsuarioSalas")';
+        var RangerHora = '@Url.Action("RangerHora", "ReservaSalas")';
+
+        //tratamento do link do Add user que é uma partial
+        var detalhesUsu = '@Url.Action("DetalhesUsuario", "UsuarioSalas")';
+
+        //tratamento das horas
+        var dateTimeNow = '@DateTime.Now.ToString("HH:mm")';
+        var dateTimeShortString = '@DateTime.Now.ToShortDateString()';
+        var dateTimeNowMinute = @DateTime.Now.Minute;
+        var dateTimeHourToString = '@DateTime.Now.Hour.ToString()';
+        var dateTimeAddHours = '@DateTime.Now.AddHours(1).Hour.ToString()';
+
+
+        $(document).ready(function () {
+            //Ajustes hora inicial edit
+            horaInicial.attr("readonly", false);
+            ajaxHoraIni();
+
+            //Ajuste das horas e dia vindo do banco
+            var diaAjustado = $("#dataselecao").val().toString();
+            $("#dataselecao").val(diaAjustado.substr(0, 10));
+
+            var horaIniAjustado = $("#horaInicial").val().toString();
+            var horaFimAjustado = $("#horaFinal").val().toString();
+
+            $("#horaInicial").val(horaIniAjustado.substr(0, 5));
+            $("#horaFinal").val(horaFimAjustado.substr(0, 5));
+
+            if (sala.val() != "") {
+                ajaxSala();
+            }
+        });
+
+        var DetailsSalas = '@Url.Action("Detalhes", "Salas")';
+    </script>
+
+    <script src="~/Scripts/reservaSalas.js"></script>
+}

@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Nova senha de acesso";
+}
+
+<div class="container margin-top-ajust margin-bot-ajust">
+    <div class="container index-z">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>
+                        <div>
+                            <h2>@ViewBag.Title</h2>
+                        </div>
+                    </p>
+                </div>
+                <div class="modal-footer col-12">
+                    <div class="row col-md-offset-2 col-md-12">
+                        <button type="button" class="btn btn-danger" title="Fechar" data-dismiss="modal"><i class="fas fa-times"></i>  Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var copyText = document.document.getElementById("myInput");
+
+    function myFunction() {
+
+        copyText.select();
+
+        document.execCommand("copy");
+
+    }
+</script>

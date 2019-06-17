@@ -1,0 +1,70 @@
+﻿@model ReservaSala.Models.UsuarioSala
+
+@{
+    ViewBag.Title = "Recuperar senha : " + Html.DisplayFor(model => model.nomeUsuario);
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="container box-container">
+    <hr class="margin-inv" />
+    <h4 class="text-centro">@ViewBag.Title</h4>
+    <h5 class="text-centro">Id: @Html.DisplayFor(model => model.idTcsUsuario)</h5>
+    <hr />
+    @Html.HiddenFor(model => model.idUsuSala)
+    @Html.HiddenFor(model => model.acessoUsu)
+    @Html.HiddenFor(model => model.nomeUsuario)
+    @Html.HiddenFor(model => model.pwdUsuario)
+    @Html.HiddenFor(model => model.perfilUsuario)
+    @Html.HiddenFor(model => model.acessoUsu)
+    @Html.HiddenFor(model => model.emailUsuario)
+    @Html.HiddenFor(model => model.nomeUsuario)
+    @Html.HiddenFor(model => model.pwdUsuario)
+    @Html.HiddenFor(model => model.idTcsUsuario)
+    @Html.HiddenFor(model => model.confirmUsu)
+    @Html.HiddenFor(model => model.perguntaSeguranca1)
+    @Html.HiddenFor(model => model.perguntaSeguranca2)
+    <hr />
+    <div class="row mt-0">
+        <div class="col-md-6 index-z negrito magin-left-ajust">
+            @Html.DisplayFor(model => model.perguntaSeguranca1, new { htmlAttributes = new { @class = "form-control border" } }) :
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.respostaSeguranca1, new { htmlAttributes = new { @class = "form-control border", @type = "password" } })
+                @Html.ValidationMessageFor(model => model.respostaSeguranca1, "", new { @class = "text-danger" })
+                <div id="carResTxt">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-md-6 index-z negrito magin-left-ajust">
+            @Html.DisplayFor(model => model.perguntaSeguranca2, new { htmlAttributes = new { @class = "form-control border index-z negrito" } }) :
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.respostaSeguranca2, new { htmlAttributes = new { @class = "form-control border", @type = "password" } })
+                @Html.ValidationMessageFor(model => model.respostaSeguranca2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <hr class="margin-top-hr" />
+    <div class="container box-footer">
+        <div class="form-group row mt-4">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary index-z margin-bot magin-left-ajust">
+                    <i class="fas fa-share"></i>   Enviar
+                </button>
+            </div>
+            <a class="btn btn-danger index-z margin-bot" title="Voltar" href="@Url.Action("Login", "UsuarioSalas")">
+                <i class="fas fa-times"></i>  Cancelar
+            </a>
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    <script src="~/Scripts/somenteNumero.js"></script>
+
+}

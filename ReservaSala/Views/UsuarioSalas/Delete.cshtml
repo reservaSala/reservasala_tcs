@@ -1,0 +1,50 @@
+﻿@model ReservaSala.Models.UsuarioSala
+
+@{
+    Layout = null;
+    ViewBag.Title = "Deletar usuário";
+}
+
+<div class="container">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>@ViewBag.Title</h2>
+            </div>
+            <div class="modal-body">
+                <h5>Você realmente deseja excluir este usuário?</h5>
+                <div class="row mt-1">
+                    <div class="col-lg-10">
+                        <h6>@Html.LabelFor(model => model.nomeUsuario, htmlAttributes: new { @class = "control-label col-md-6" })</h6>
+                        <div class="col-md-12">
+                            @Html.DisplayFor(model => model.nomeUsuario, new { htmlAttributes = new { @class = "form-control border" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-lg-10">
+                        <h6>@Html.LabelFor(model => model.idTcsUsuario, htmlAttributes: new { @class = "control-label col-md-6" })</h6>
+                        <div class="col-md-12">
+                            @Html.DisplayFor(model => model.idTcsUsuario, new { htmlAttributes = new { @class = "form-control border" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-footer col-6">
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-12">
+                            <button type="submit" class="btn btn-danger" id="delete"><i class="fas fa-times"></i>  Deletar</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button type="button" class="btn btn-success" data-dismiss="modal"> <i class="fas fa-door-closed"></i>  Fechar</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,139 @@
+﻿@model IEnumerable<ReservaSala.Models.Salas>
+
+@{
+    ViewBag.Title = "Salas";
+    <link href="~/Content/dataTables.css" rel="stylesheet" />
+
+}
+
+<div class="container margin-top-ajust margin-bot-ajust">
+    <div class="container box-container-for-modal">
+        <hr class="margin-inv"/>
+        <h4 class="text-centro">@ViewBag.Title</h4>
+        <hr />
+        @if (Session["Perfil"].ToString() == "Administrador")
+        {
+            <div class="container-fluid">
+                <a class="btn btn-primary" title="Cadastrar uma Sala" href="@Url.Action("Create", "Salas")">
+                    <i class="fas fa-plus"></i> Cadastrar nova sala
+                </a>
+            </div>
+        }
+        <div class="container">
+            <table class="myTable" id="myTable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nomeSala)
+                        </th>
+                        <th class="text-center">
+                            <p>Informações:</p>
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.andarSala)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.lugarSala)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.observSala)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nomeSala)
+                            </td>
+                            <td class="text-center" id="valor_id">
+                                <button class="btn btn-info btn-sm" title="Detalhes" onclick="btnAbrirModal(@item.idSala)">
+                                    <i class="fas fa-info-circle"></i>
+                                </button>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.andarSala)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.lugarSala)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.observSala)
+                            </td>
+                            <td class="text-center">
+                                @if (Session["Perfil"].ToString() == "Administrador")
+                                {
+                                    <a class="btn btn-success btn-sm" title="Editar" href="@Url.Action("Edit", "Salas", new { id = item.idSala })">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm" title="Deletar" onclick="btnAbrirModalDelete(@item.idSala)">
+                                        <i class="fas fa-eraser"></i>
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div id="modal_Sala" class="modal fade"></div>
+            <div id="modal_SalaDelete" class="modal fade"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/Scripts/dataTables.js"></script>
+    <script src="~/Scripts/dataTables-bootstrap.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#myTable').dataTable({
+                "info": false,
+                "bLengthChange": false,
+                "pageLength": 10,
+                "responsive": true,
+                language: {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Processando...</span>',
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar Sala: ",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                },
+                "columnDefs": [{
+                    "targets": [2, 3, 4],
+                    "searchable": false,
+                    "orderable": false,
+                    "visible": false
+                },
+                {
+                    "targets": [1, 5],
+                    "searchable": false,
+                    "orderable": false,
+                }]
+            });
+        });
+
+        var DeleteSalas = '@Url.Action("Delete", "Salas")';
+
+        var DetailsSalas = '@Url.Action("Details", "Salas")';
+    </script>
+
+    <script src="~/Scripts/modaisBotõesInfoDel.js"></script>
+}
+

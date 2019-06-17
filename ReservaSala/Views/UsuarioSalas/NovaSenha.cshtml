@@ -1,0 +1,89 @@
+﻿@model ReservaSala.Models.UsuarioSala
+
+@{
+    ViewBag.Title = "Nova Senha";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="container box-container">
+    <hr class="margin-inv" />
+    <h4 class="text-centro">@ViewBag.Title</h4>
+    <hr />
+    @Html.HiddenFor(model => model.idUsuSala)
+    @Html.HiddenFor(model => model.acessoUsu)
+    @Html.HiddenFor(model => model.nomeUsuario)
+    @Html.HiddenFor(model => model.idTcsUsuario)
+    @Html.HiddenFor(model => model.perfilUsuario)
+    @Html.HiddenFor(model => model.emailUsuario)
+    @Html.HiddenFor(model => model.confirmUsu)
+    @Html.HiddenFor(model => model.perguntaSeguranca1)
+    @Html.HiddenFor(model => model.perguntaSeguranca2)
+    @Html.HiddenFor(model => model.respostaSeguranca1)
+    @Html.HiddenFor(model => model.respostaSeguranca2)
+    <div class="row mt-0">
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.nomeUsuario, htmlAttributes: new { @class = "control-label col-md-6 index-z negrito magin-left-ajust" })
+            <div class="col-md-6 magin-left-ajust">
+                @Html.DisplayFor(model => model.nomeUsuario, new { htmlAttributes = new { @class = "form-control " } })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.idTcsUsuario, htmlAttributes: new { @class = "control-label col-md-6 index-z negrito" })
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.idTcsUsuario, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.emailUsuario, htmlAttributes: new { @class = "control-label col-md-6 index-z negrito magin-left-ajust" })
+            <div class="col-md-6 magin-left-ajust">
+                @Html.DisplayFor(model => model.emailUsuario, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.perfilUsuario, htmlAttributes: new { @class = "control-label col-md-6 index-z negrito" })
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.perfilUsuario, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.pwdUsuario, htmlAttributes: new { @class = "control-label col-md-2 index-z negrito magin-left-ajust" })
+            <div class="col-md-6 magin-left-ajust">
+                @Html.EditorFor(model => model.pwdUsuario, new { htmlAttributes = new { @class = "form-control border", @type = "password" } })
+                @Html.ValidationMessageFor(model => model.pwdUsuario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label class="control-label col-md-2 index-z negrito">Confirmação:</label>
+            <div class="col-md-6">
+                <input type="password" placeholder="Confirme sua nova senha" id="confirm_password" class="form-control border" required>
+            </div>
+        </div>
+    </div>
+    <hr class="margin-top-hr" />
+    <div class="container box-footer">
+        <div class="form-group row mt-4">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary index-z margin-bot magin-left-ajust">
+                    <i class="far fa-save"></i>   Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    <script src="~/Scripts/somenteNumero.js"></script>
+
+}
+

@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="~/favicon.ico" />
+    <link rel="shortcut icon" type="image/png" href="~/favicon.ico" />
+    <link href="~/Content/fontawesome-free-5.8.2-web/css/all.min.css" rel="stylesheet" />
+    <title>@ViewBag.Title - Tcs Brasil - Londrina</title>
+    @Styles.Render("~/bundles/site")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    @if (Session["Acesso"].ToString() == "login")
+    {
+        <div class="background"></div>
+    }
+    <div id="preload" class="preload"></div>
+    @if (Session["Acesso"].ToString() == "true")
+    {
+        <nav class="navbar navbar-expand-sm bg-info navbar-dark fixed-top">
+            <a class="navbar-brand" href="@Url.Action("Create","ReservaSalas")">Reservar sala</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+                @if (Session["UserName"] != null)
+                {
+                    <ul class="navbar-nav mr-auto">
+
+                        <li class="nav-item active">
+                            <a class="nav-link" href="@Url.Action("Index", "ReservaSalas")">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Salas")">Salas</a>
+                        </li>
+                        @if (Session["Perfil"].ToString() == "Administrador")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Create", "Salas")">Cadastrar Sala</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "UsuarioSalas")">Usuarios cadastrados</a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right my-2 my-lg-0">
+                        <li class=" nav-item navbar-right">
+                            <span class="navbar-text text-right">
+                                @if (DateTime.Now.Hour < 12)
+                                {
+                                    <span> Bom dia, <a href="@Url.Action("Details", "UsuarioSalas", new { id = Convert.ToInt32(Session["UserID"].ToString()) })"> @Session["UserName"].ToString()</a> &nbsp; &nbsp;</span>
+                                }
+                                else if (DateTime.Now.Hour > 12 && DateTime.Now.Hour < 18)
+                                {
+                                    <span> Boa Tarde, <a href="@Url.Action("Details", "UsuarioSalas", new { id = Convert.ToInt32(Session["UserID"].ToString()) })"> @Session["UserName"].ToString()</a> &nbsp; &nbsp; </span>
+                                }
+                                else
+                                {
+                                    <span> Boa Noite, <a href="@Url.Action("Details", "UsuarioSalas", new { id = Convert.ToInt32(Session["UserID"].ToString()) })"> @Session["UserName"].ToString()</a> &nbsp; &nbsp;</span>
+                                }
+                            </span>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <a class="btn btn-danger my-2 my-sm-0" href="@Url.Action("LogOff", "UsuarioSalas")"><i class="fas fa-door-open"></i>       Logout</a>
+                    </form>
+                }
+
+            </div>
+        </nav>
+    }
+    <main role="main" class="container">
+        <div class="container-fluid col-md-12 mt-1">
+            <div class="wrapper">
+                @RenderBody()
+                <div class="push"></div>
+            </div>
+        </div>
+    </main>
+    @*<footer class="footer navbar-fixed-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="text-center py-2">
+                        <span class="footer-copyright text-center">&copy; @DateTime.Now.Year - Tata Consultancy Services Brazil</span>
+                    </div>
+                </div>
+            </div>
+        </footer>*@
+    @if (Session["Acesso"].ToString() == "true")
+    {
+        <footer class="footer">
+            <div class="container">
+                <div class="row mt-2">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center ">
+                        <div class="tiny-footer">
+                            <p>&copy; @DateTime.Now.Year - <a href="https://www.tcs.com" target="_blank" class="link-Tcs">Tata Consultancy Services Brazil</a></p>
+                        </div>
+                    </div>
+                    <!-- /. tiny-footer -->
+                </div>
+            </div>
+        </footer>
+    }
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/sweetalert")
+    <script src="~/Scripts/lib/jquery-ui.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/preload.js"></script>
+
+    @if (TempData["mensagem"] != null)
+    {
+        <script>
+            $(document).ready(function () {
+
+                if ('@TempData["mensagem"]' != "") {
+                    Swal.fire({
+                        type: 'success',
+                        title: '@TempData["mensagem-title"]',
+                        text: '@TempData["mensagem"]'
+                    })
+                }
+
+            });
+
+        </script>
+    }
+    @if (TempData["mensagem-erro"] != null)
+    {
+        <script>
+            $(document).ready(function () {
+                if ('@TempData["mensagem-erro"]' != "") {
+                    Swal.fire({
+                    type: 'error',
+                        title: '@TempData["mensagem-title"]',
+                        text: '@TempData["mensagem-erro"]'
+                    })
+                }
+            });
+
+        </script>
+    }
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

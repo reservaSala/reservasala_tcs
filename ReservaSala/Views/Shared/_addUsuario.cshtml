@@ -1,0 +1,61 @@
+﻿@model ReservaSala.Models.ReservaSala
+
+<div class="col-md-6">
+    <label class="control-label col-md-6">Usuario a reservar a sala: </label>
+    <button type="button" class="btn btn-primary btn-custom" onclick="btnAbrirModal()"><i class="fa fa-plus" aria-hidden="true"></i> Usuario</button>
+    <div class="col-md-8">
+        @Html.DropDownListFor(model => model.idUsuSala, null, "Selecione um reservante", htmlAttributes: new { @class = "form-control", @id = "sel_users" })
+        @*id do usuario selecionado vai aqui*@
+        @Html.ValidationMessageFor(model => model.idUsuSala, "", new { @class = "text-danger" })
+    </div>
+    <div id="tcsId"></div>
+</div>
+
+@*Isto seria usado no create do reservasala e edit, é uma partial sem uso no momento*@
+<div id="divPartialUsuario" class="row mt-3">
+    @Html.Partial("_addUsuario")
+</div>
+
+<script>
+
+    //tratamentos dos itens da partial
+    var selUser = $("#sel_users");
+    var info = $("#tcsId");
+
+    function selecaoID() {
+
+        if (selUser.val() != "") {
+            var valUser = parseInt(selUser.val());
+            $.ajax({
+                url: detalhesUsu,
+                type: "POST",
+                dataType: "JSON",
+                cache: false,
+                data: { IdUser: valUser },
+                success: function (retorno) {
+
+                    // Interpretando retorno JSON
+                    var userInfo = retorno;
+
+                    //listando as informacoes
+                    var item = "<div><label>Id: &nbsp;</label>" + userInfo.idTcsUsuario + "</div>";
+                    info.children().remove();
+                    info.prepend(item);
+                }
+            });
+        } else {
+            info.children().remove();
+        }
+    }
+
+    $(document).ready(function () {
+        if (selUser.val() != "") {
+            selecaoID();
+        }
+    });
+
+
+    selUser.change(function () {
+        selecaoID();
+    });
+</script>

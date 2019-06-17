@@ -1,0 +1,98 @@
+﻿@model ReservaSala.Models.UsuarioSala
+<link href="~/Content/Login.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Login";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+
+            <div class="fadeIn first">
+                <img src="~/Content/Imagens/tcs_logo.png" id="icon" alt="User Icon" />
+            </div>
+            <hr />
+
+            <div>
+                @Html.TextBoxFor(m => m.idTcsUsuario, new { @class = "fadeIn second", @name = "login", @placeholder = "Usuário Id", @id = "somenteNumeros", @oncopy = "return false", @onpaste = "return false", @ondrop = "return false", @type = "texto" })
+                @Html.TextBoxFor(m => m.pwdUsuario, new { @class = "fadeIn third", @name = "login", @placeholder = "Senha", @id = "password", @type = "password" })
+                <input type="submit" class="fadeIn fourth" value="Entrar" />
+            </div>
+
+            <div id="formFooter">
+                <div class="row justify-content-center">
+                    <a class="underlineHover" href="@Url.Action("Cadastro", "UsuarioSalas")">Cadastrar novo usuário</a>
+                </div>
+                <div class="row justify-content-center">
+                    <a class="underlineHover vermelho-link" onclick="resetSenha()">Esqueceu sua senha?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_login" class="modal fade"></div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/somenteNumero.js"></script>
+    <script>
+        var CopyUsuario = '@Url.Action("_modalLogin", "UsuarioSalas")';
+
+        function resetSenha() {
+
+             Swal.mixin({
+              input: 'text',
+              confirmButtonText: 'Confirmar',
+              showCancelButton: true,
+              cancelButtonText: 'Cancelar',
+              progressSteps: ['Id']
+            }).queue([
+              {
+                title: 'Digite o seu Id Tcs',
+                text: 'Caso já cadastrado e você esqueceu sua senha.'
+              }
+                 ]).then((result) => {
+                     var resultado = null
+                     if (result.value == undefined) {                                                            ;
+                     resultado = '@Url.Action("Login", "UsuarioSalas")';
+                     window.location.href = resultado;
+                         result = null;
+                     } else {
+                     resultado = '@Url.Action("RecuperaSenha", "UsuarioSalas")' + '/' + result.value;
+                     window.location.href = resultado;
+                         result = null;
+                     }
+            })
+        }
+
+
+
+    </script>
+
+
+
+    @if (TempData["mensagem-info"] != null)
+    {
+        <link href="~/Content/sweetalert_copy.min.css" rel="stylesheet" />
+        <script src="~/Scripts/jquery-sweet.min.js"></script>
+        <script src="~/Scripts/sweetalert-dev.js"></script>
+        <script src="~/Scripts/clipboard.min.js"></script>
+
+        <script>
+            var mensagem = '@TempData["mensagem-info"].ToString()';
+            var senhaNova = '@TempData["mensagem-title"].ToString()';
+        </script>
+
+        <script src="~/Scripts/novaSenha.js"></script>
+
+        <button class="btn btn-primary" id="copyBtn" data-clipboard-target="#info_block" onclick="copyText();" hidden></button>
+
+        <div id="info_block" name="info_block" class="senha_inv">
+            @TempData["mensagem-title"].ToString()
+        </div>
+    }
+
+}
+

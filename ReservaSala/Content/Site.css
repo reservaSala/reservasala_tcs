@@ -1,0 +1,286 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    padding-top: 50px;
+    height: 100%;
+    margin: 0;
+    /*background-position: center;*/
+    /*background-image: url('../Content/Imagens/Tecno-img.jpg');*/
+    background-size: auto;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*background-color: white;*/
+    opacity: 0.6;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(271deg, #0148aa, #e83e8c, #d54496, #83cfec);
+    background-size: 800% 800%;
+    -webkit-animation: AnimationName 9s ease infinite;
+    -moz-animation: AnimationName 9s ease infinite;
+    animation: AnimationName 9s ease infinite;
+}
+
+
+@-webkit-keyframes AnimationName {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-moz-keyframes AnimationName {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes AnimationName {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+    textarea.semAjuste {
+        resize: none;
+    }
+
+.btn-custom {
+    padding: 1px 15px 3px 2px;
+    border-radius: 50px;
+}
+
+.btn-icon {
+    padding: 8px;
+    background: #ffffff;
+}
+
+.input-100 {
+    width: 100px !important;
+}
+
+/* Elementos para jogar o footer para baixo*/
+.content {
+    min-height: 100%;
+}
+
+.wrapper {
+    min-height: 100%;
+    margin-bottom: -50px;
+}
+
+.content-inside {
+    padding: 20px;
+    padding-bottom: 50px;
+}
+
+.footer {
+    position: fixed !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    z-index: 2000;
+}
+
+
+footer {
+    background-color: #17a2b8 !important;
+    color: white;
+    /*line-height: 5px;*/
+    /*padding: 0 10px !important;*/
+}
+
+.coluna-fixa {
+    height: 150px;
+    width: 100px;
+    position: fixed;
+    right: 10px;
+    top: 55px;
+}
+
+.posicao_centro {
+    position: center !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.border {
+    box-shadow: 0 0 3px #000000;
+    margin: 5px;
+}
+
+.margin-ajust{
+    margin-top: 25px;
+}
+
+.margin-direita{
+    margin-right: 30px;
+}
+
+.link-Tcs{
+    color: white;
+}
+
+.link-Tcs:hover {
+    color: white;   
+}
+
+.margin-top-ajust{
+    margin-top: 50px;
+}
+
+.vermelho-link {
+    color: #4b81af !important;
+    cursor: pointer;
+}
+
+.cursor-btn{
+    cursor: pointer;
+}
+
+.negrito {
+    font-weight: bold;
+}
+
+.preload {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    background-color: #fff;
+    background-image: url('../Content/Imagens/balls.gif');
+    background-size: 298px 298px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.box-container {
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    background: #fff;
+    padding: 30px;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    padding: 0px;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    text-align: initial;
+    opacity: 0.9;
+}
+
+.box-container-for-modal {
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    background: #fff;
+    padding: 30px;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    padding: 0px;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    text-align: initial;
+}
+
+.box-Footer {
+    background-color: #f6f6f6;
+    border-top: 1px solid #dce8f1;
+    padding: 5px;
+    text-align: center;
+    -webkit-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
+}
+
+.text-centro{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.margin-top-hr{
+    margin-top: 10px;
+}
+
+.index-z{
+    z-index: 99;
+}
+
+.margin-bot{
+    margin-bottom: 20px;
+}
+
+.magin-left-ajust{
+    margin-left: 25px;
+}
+
+.margin-bot-ajust {
+    margin-bottom: 50px;
+}
+
+.margin-inv {
+   margin-top: 10px;
+}
+
+.fc-center {
+    margin-left: -205px;
+}
+
+.fc-left{
+    margin-left: 25px;
+}
+
+.senha_inv {
+    position: absolute;
+    left: -99999px;
+}

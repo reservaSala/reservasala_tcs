@@ -1,0 +1,90 @@
+﻿@model ReservaSala.Models.Salas
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+<div class="container margin-top-ajust margin-bot-ajust">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.idSala)
+
+        <div class="container box-container">
+            <hr class="margin-inv" />
+            <h4 class="text-centro">@ViewBag.Title - Sala</h4>
+            <hr />
+            <div class="row mt-1">
+                <div class="col-md-6 form-group">
+                    @Html.LabelFor(model => model.nomeSala, htmlAttributes: new { @class = " font-weight-bold control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.nomeSala, new { htmlAttributes = new { @class = "form-control border" } })
+                        @Html.ValidationMessageFor(model => model.nomeSala, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    @Html.LabelFor(model => model.andarSala, htmlAttributes: new { @class = "font-weight-bold control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.andarSala, ((IEnumerable<SelectListItem>)ViewBag.Andares), "Selecione um dos andares", new { @class = "form-control border" })
+                        @Html.ValidationMessageFor(model => model.andarSala, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-6 form-group">
+                    @Html.LabelFor(model => model.lugarSala, htmlAttributes: new { @class = "font-weight-bold control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.lugarSala, new { htmlAttributes = new { @class = "form-control border" } })
+                        @Html.ValidationMessageFor(model => model.lugarSala, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    @Html.LabelFor(model => model.observSala, htmlAttributes: new { @class = "font-weight-bold control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.observSala, new { cols = 50, @rows = 6, @maxlenght = 250, @class = "form-control border semAjuste", @id = "medidor" })
+                        @Html.ValidationMessageFor(model => model.observSala, "", new { @class = "text-danger" })
+                        <div id="carResTxt">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6 form-group">
+                    @Html.LabelFor(model => model.salaAtiva, htmlAttributes: new { @class = "font-weight-bold control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.salaAtiva, ((IEnumerable<SelectListItem>)ViewBag.Ativo), new { @class = "form-control border" })
+                        @Html.ValidationMessageFor(model => model.salaAtiva, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <hr class="margin-top-hr" />
+            <div class="container box-footer">
+                <div class="form-group row mt-4">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-primary index-z margin-bot magin-left-ajust">
+                            <i class="far fa-save"></i>   Salvar
+                        </button>
+                    </div>
+                    <a class="btn btn-danger index-z margin-bot" title="Voltar" href="@Url.Action("Index","Salas")">
+                        <i class="fas fa-times"></i>  Cancelar
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/somenteNumero.js"></script>
+
+    <script>
+        var pageLimite = 250;
+    </script>
+
+    <script src="~/Scripts/limiteDeCaracteres.js"></script>
+}

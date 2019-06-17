@@ -1,0 +1,70 @@
+﻿@model ReservaSala.Models.Salas
+
+@{
+    Layout = null;
+    ViewBag.Title = "Informações";
+}
+
+<div class="container margin-top-ajust margin-bot-ajust">
+    <div class="container">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>
+                        <div>
+                            <h2>@ViewBag.Title Salas</h2>
+                        </div>
+                    </p>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <h6>@Html.DisplayNameFor(model => model.nomeSala)</h6>
+                            <div class="col-lg-12">
+                                @Html.TextAreaFor(model => model.nomeSala, new { cols = 10, @rows = 2, @maxlenght = 250, @class = "form-control border semAjuste text-center col-lg-12", @disabled = "disabled" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <h6>@Html.DisplayNameFor(model => model.andarSala)</h6>
+                            <div class="col-lg-12">
+                                @Html.TextAreaFor(model => model.andarSala, new { cols = 10, @rows = 2, @maxlenght = 250, @class = "form-control border semAjuste text-center", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <h6>@Html.DisplayNameFor(model => model.lugarSala)</h6>
+                            <div class="col-lg-12">
+                                @Html.TextAreaFor(model => model.lugarSala, new { cols = 10, @rows = 2, @maxlenght = 250, @class = "form-control border semAjuste text-center", @disabled = "disabled" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6" id="obsSala">
+                            <h6>@Html.DisplayNameFor(model => model.observSala)</h6>
+                            <div class="col-lg-12">
+                                @Html.TextAreaFor(model => model.observSala, new { cols = 50, @rows = 6, @maxlenght = 250, @class = "form-control border semAjuste", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer col-12">
+                    <div class="row col-md-offset-2 col-md-12">
+                        <button type="button" class="btn btn-danger" title="Fechar" data-dismiss="modal"><i class="fas fa-times"></i>  Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        $(document).ready(function () {
+            var tamObser = $("#observSala").val().length;
+
+            if (tamObser == 0) {
+                $("#obsSala").attr("hidden", true);
+            }
+        });
+    </script>

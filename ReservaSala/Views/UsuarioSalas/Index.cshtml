@@ -1,0 +1,100 @@
+﻿@model IEnumerable<ReservaSala.Models.UsuarioSala>
+
+@{
+    ViewBag.Title = "Usuarios cadastrados";
+    <link href="~/Content/dataTables.css" rel="stylesheet" />
+}
+
+<div class="container margin-top-ajust margin-bot-ajust">
+    <div class="container box-container-for-modal">
+        <hr class="margin-inv" />
+        <h4 class="text-centro">@ViewBag.Title</h4>
+        <hr />
+        <div class="container">
+            <table class="myTable" id="myTable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nomeUsuario)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.idTcsUsuario)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nomeUsuario)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.idTcsUsuario)
+                            </td>
+                            <td>
+                                @if (Session["Perfil"].ToString() == "Administrador")
+                                {
+                                    <a class="btn btn-success btn-sm" title="Editar" href="@Url.Action("Edit", "UsuarioSalas", new { id = item.idUsuSala })">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    <button class="btn btn-danger btn-sm" title="Deletar" onclick="btnAbrirModalUsuarioDelete(@item.idUsuSala)">
+                                        <i class="fas fa-eraser"></i>
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="modal_Delete" class="modal fade"></div>
+
+
+@section Scripts {
+    <script src="~/Scripts/dataTables.js"></script>
+    <script src="~/Scripts/dataTables-bootstrap.js"></script>
+
+    <script>
+        var DeleteUsuarioSala = '@Url.Action("Delete", "UsuarioSalas")';
+
+        $(document).ready(function () {
+            $('#myTable').dataTable({
+                "fixedHeader": true,
+                "bLengthChange": false,
+                "pageLength": 10,
+                "responsive": true,
+                "info": false,
+                language: {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Processando...</span>',
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar usuário: ",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                },
+                "columnDefs": [{
+                    "targets": 2,
+                    "searchable": false,
+                    "orderable": false
+                }]
+            });
+        });
+    </script>
+
+    <script src="~/Scripts/modaisBotõesInfoDel.js"></script>
+}

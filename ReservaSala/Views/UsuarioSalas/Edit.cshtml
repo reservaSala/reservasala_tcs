@@ -1,0 +1,181 @@
+﻿@model ReservaSala.Models.UsuarioSala
+
+@{
+    ViewBag.Title = "Editar usuário";
+}
+
+<div class="container margin-top-ajust margin-bot-ajust">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container box-container">
+        <hr class="margin-inv" />
+        <h4 class="text-centro">@ViewBag.Title</h4>
+        <hr />
+        @Html.HiddenFor(model => model.idUsuSala)
+        @Html.HiddenFor(model => model.acessoUsu)
+        @Html.HiddenFor(model => model.confirmUsu)
+        @if (Session["Perfil"].ToString() == "Administrador")
+        {
+            <div class="row mt-0">
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.idTcsUsuario, htmlAttributes: new { @class = "control-label col-md-2 index-z negrito" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.idTcsUsuario, new { htmlAttributes = new { @class = "form-control border", @id = "somenteNumeros" } })
+                        @Html.ValidationMessageFor(model => model.idTcsUsuario, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.nomeUsuario, htmlAttributes: new { @class = "control-label col-md-2 index-z negrito" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.nomeUsuario, new { htmlAttributes = new { @class = "form-control border", @id = "medidor" } })
+                        @Html.ValidationMessageFor(model => model.nomeUsuario, "", new { @class = "text-danger" })
+                        <div id="carResTxt">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-1">
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.emailUsuario, htmlAttributes: new { @class = "control-label col-md-2 index-z negrito" })
+                    <div class="col-md-10">
+                        <div class="input-group-prepend">
+                            @Html.EditorFor(model => model.emailUsuario, new { htmlAttributes = new { @class = "form-control border", @id = "email" } })<span class="input-group-text" id="emailResto">&#64;tcs.com</span>
+                            @Html.ValidationMessageFor(model => model.emailUsuario, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.perfilUsuario, htmlAttributes: new { @class = "control-label col-md-2 index-z negrito" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.perfilUsuario, ((IEnumerable<SelectListItem>)ViewBag.Perfis), "Selecione um perfil", new { @class = "form-control border" })
+                        @Html.ValidationMessageFor(model => model.perfilUsuario, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row mt-0">
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.idTcsUsuario, htmlAttributes: new { @class = "control-label col-md-2 index-z negrito" })
+                    <div class="col-md-6">
+                        @Html.DisplayFor(model => model.idTcsUsuario, new { htmlAttributes = new { @class = "form-control border", @id = "somenteNumeros" } })
+                        @Html.ValidationMessageFor(model => model.idTcsUsuario, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.nomeUsuario, htmlAttributes: new { @class = "control-label col-md-2 index-z negrito" })
+                    <div class="col-md-6">
+                        @Html.DisplayFor(model => model.nomeUsuario, new { htmlAttributes = new { @class = "form-control border", @id = "medidor" } })
+                        @Html.ValidationMessageFor(model => model.nomeUsuario, "", new { @class = "text-danger" })
+                        <div id="carResTxt">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-1">
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.emailUsuario, htmlAttributes: new { @class = "control-label col-md-2 index-z negrito" })
+                    <div class="col-md-10">
+                        <div class="input-group-prepend">
+                            @Html.DisplayFor(model => model.emailUsuario, new { htmlAttributes = new { @class = "form-control border", @id = "email" } })
+                            @Html.ValidationMessageFor(model => model.emailUsuario, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.perfilUsuario, htmlAttributes: new { @class = "control-label col-md-2 index-z negrito" })
+                    <div class="col-md-6">
+                        @Html.DisplayFor(model => model.perfilUsuario, new { @class = "form-control border" })
+                        @Html.ValidationMessageFor(model => model.perfilUsuario, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(model => model.nomeUsuario)
+            @Html.HiddenFor(model => model.idTcsUsuario)
+            @Html.HiddenFor(model => model.perfilUsuario)
+            @Html.HiddenFor(model => model.emailUsuario)
+            @Html.HiddenFor(model => model.perfilUsuario)
+        }
+
+        <div class="row mt-2">
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.pwdUsuario, htmlAttributes: new { @class = "control-label col-md-2 index-z negrito" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.pwdUsuario, new { htmlAttributes = new { @class = "form-control border", @id = "password", @type = "password" } })
+                    @Html.ValidationMessageFor(model => model.pwdUsuario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="control-label col-md-2 index-z negrito">Confirmação:</label>
+                <div class="col-md-6">
+                    <input type="password" placeholder="Confirme sua senha" id="confirm_password" class="form-control border" required>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.perguntaSeguranca1, htmlAttributes: new { @class = "control-label col-md-6 index-z negrito" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.perguntaSeguranca1, ((IEnumerable<SelectListItem>)ViewBag.PergUm), "Selecione uma pergunta de segurança - 1", new { @class = "form-control border" })
+                    @Html.ValidationMessageFor(model => model.perguntaSeguranca1, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.respostaSeguranca1, htmlAttributes: new { @class = "control-label col-md-6 index-z negrito" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.respostaSeguranca1, new { htmlAttributes = new { @class = "form-control border", @type = "password" } })
+                    @Html.ValidationMessageFor(model => model.respostaSeguranca1, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.perguntaSeguranca2, htmlAttributes: new { @class = "control-label col-md-6 index-z negrito" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.perguntaSeguranca2, ((IEnumerable<SelectListItem>)ViewBag.PergDois), "Selecione uma pergunta de segurança - 1", new { @class = "form-control border" })
+                    @Html.ValidationMessageFor(model => model.perguntaSeguranca2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.respostaSeguranca2, htmlAttributes: new { @class = "control-label col-md-6 index-z negrito" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.respostaSeguranca2, new { htmlAttributes = new { @class = "form-control border", @type="password" } })
+                    @Html.ValidationMessageFor(model => model.respostaSeguranca2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <hr class="margin-top-hr" />
+        <div class="container box-footer">
+            <div class="form-group row mt-4">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-primary index-z margin-bot magin-left-ajust">
+                        <i class="far fa-save"></i>   Salvar
+                    </button>
+                </div>
+                <a class="btn btn-danger index-z margin-bot" title="Voltar" href="@Url.Action("Index", "ReservaSalas")">
+                    <i class="fas fa-times"></i>  Cancelar
+                </a>
+            </div>
+        </div>
+    </div>
+
+ }
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/somenteNumero.js"></script>
+    <script src="~/Scripts/criarUsuario.js"></script>
+
+    <script>
+        var pageLimite = 50;
+    </script>
+}

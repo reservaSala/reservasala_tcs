@@ -1,0 +1,150 @@
+﻿@model ReservaSala.Models.ReservaSala
+
+@{
+    ViewBag.Title = "Index";
+    <link href="~/Content/fullcalendar.css" rel="stylesheet" />
+    <link href="~/Content/daygrid.css" rel="stylesheet" />
+
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<div class="container margin-top-ajust margin-bot-ajust">
+    <div class="container box-container-for-modal">
+        <div class="container">
+            <hr />
+            <div class="row mt-1">
+                <div class="col-md-6">
+                    <div class="magin-left-ajust negrito">Visualizar reservas da sala:</div>
+                    <div class="col-6">
+                        @Html.DropDownList("idSala", ViewBag.Salas as SelectList, "Selecione uma sala", new { @class = "form-control border" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div id='calendar'></div>
+            </div>
+
+            <div id="calendarModal" class="modal fade"></div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/Scripts/fullcalendar.js"></script>
+    <script src="~/Scripts/daygrid.js"></script>
+
+    <script>
+    //Lista os eventos do calendario em um array
+    var eventos = [];
+
+    //Inicia a variavel de um calendario
+    var calendarEl = document.getElementById('calendar');
+
+        var calendar;
+
+    var sala = $("#idSala");
+        var horariosSala;
+        var mesApos = @DateTime.Now.Month + 1;
+        if (mesApos < 10) {
+            mesApos = "0" + mesApos;
+        }
+        var datahj = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        var dataFutura = '@DateTime.Now.AddMonths(1).ToString("yyyy-MM-dd")';
+
+        sala.change(function () {
+
+            if (sala.val() == 0) {
+                calendar.destroy();
+            }
+            else
+            {
+                if ($('#calendar').children().length > 0) {
+                    calendar.destroy();
+                }
+                //Ajax full calendar
+                $.ajax({
+                    url: '@Url.Action("ReservasDia", "ReservaSalas")',
+                    type: "POST",
+                    dataType: "JSON",
+                    cache: false,
+                    data: { IdSala: sala.val() },
+                    success: function (retorno) {
+                        horariosSala = retorno;
+                        $.each(horariosSala, function (index, value) {
+                            value.start = new Date(parseInt(value.start.replace(/[^0-9 +]/g, '')));
+                            value.end = new Date(parseInt(value.end.replace(/[^0-9 +]/g, '')));
+                        });
+                    },
+                    complete: function () {
+                        //calendar.destroy();
+                        calendar = new FullCalendar.Calendar(calendarEl, {
+                            plugins: [/*'interaction', */ /*'timeGridPlugin'*/ 'dayGrid'],
+                            validRange: {
+                                start: datahj,
+                                end: dataFutura
+                            },
+                            //timeZone: 'UTC',
+                            defaultView: 'dayGridDay',
+                            //defaultView: 'agendaWeek',
+                            locale: 'pt-br',
+                            buttonText: {
+                                today: 'Hoje'
+                            },
+                            header: {
+                                left: 'prev,next, today',
+                                center: 'title',
+                                right: ''
+                            },
+                            editable: false,
+                            allDaySlot: false,
+                            events: horariosSala,
+                            eventClick: function (info) {;
+
+                                var idEvento = info.event.id;
+
+                                var Detalhes = '@Url.Action("Details", "ReservaSalas")';
+
+                                    $("#calendarModal").load(Detalhes + "/" + idEvento, function () {
+
+                                    $("#calendarModal").modal('toggle');
+                                });
+                            }
+                        });
+
+                        calendar.render();
+                    }
+                });
+            }
+    });
+
+
+    //document.addEventListener('DOMContentLoaded', function () {
+    //    var calendarEl = document.getElementById('calendar');
+
+    //    var calendar = new FullCalendar.Calendar(calendarEl, {
+    //        plugins: ['interaction', 'dayGrid'],
+    //        timeZone: 'UTC',
+    //        defaultView: 'dayGridDay',
+    //        locale: 'pt-br',
+    //        header: {
+    //            left: 'prev,next',
+    //            center: 'title'
+    //        },
+    //        editable: false,
+    //        events: [
+    //        ]
+    //    });
+
+    //    calendar.render();
+    //});
+
+        //function data() {
+        //    $('#dataselecao').on('keyup', function () {
+        //        tabelaData
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //}
+    </script>
+
+    <script src="~/Scripts/modaisBotõesInfoDel.js"></script>
+}
